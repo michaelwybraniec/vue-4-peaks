@@ -34,8 +34,14 @@
 </template>
 
 <script>
-import { lifecycleHooks, data } from "../shared";
-import PersonDetail from "@/components/PersonDetail";
+import axios from "axios";
+import { mapActions, mapState } from 'vuex';
+import { 
+  //lifecycleHooks, 
+  //data, //hardcoded data
+  //dataService
+   } from "../shared";
+import PersonDetail from "@/views/person-detail";
 
 export default {
   name: "People",
@@ -49,18 +55,27 @@ export default {
   components: {
     PersonDetail
   },
-  mixins: [lifecycleHooks],
   async created() {
     await this.loadPeople();
   },
   methods: {
+    ...mapActions(['getPeopleAction', 'deletePersonAction']),
     async loadPeople() {
-      this.people = [];
       this.message = "Getting the people...";
-
-      this.people = await data.getPeople();
-
-      this.message = "";
+      //this.people = await data.getPeople(); // hadcoded data.
+      //await this.getPeopleAction();
+     
+      let apiKey = "apikey=c57d263f5e59e2805cebe38c6f1f63c0";
+      let url = "https://gateway.marvel.com:443/v1/public/characters?" + apiKey;
+      const requestOptions = {
+        method: 'GET',
+        format: 'json',
+        api_key: apiKey,
+       };
+       let response = await axios(url,requestOptions )
+       console.log("response", response.data.data.results)
+       this.people = response;
+       this.message = "";
     },
     cancelPerson() {
       this.selectedPerson = undefined;
@@ -74,6 +89,9 @@ export default {
     selectPerson(person) {
       this.selectedPerson = person;
     }
+  },
+  computed:{
+    ...mapState(['people']),
   }
 };
 </script>

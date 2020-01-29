@@ -24,3 +24,17 @@ export const lifecycleHooks = {
     logger.info(`${this.componentName} destroyed ${hookMessageSuffix}`);
   }
 };
+
+export const heroWatchers = {
+  // Watchers
+  watch: {
+    selectedHero: {
+      immediate: true,
+      deep: true,
+      handler(newValue, oldValue) {
+        logger.info("old values", oldValue);
+        logger.info("new values", newValue);
+      }
+    }
+  }
+};

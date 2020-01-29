@@ -86,19 +86,21 @@
 </template>
 
 <script>
-import { lifecycleHooks, data } from "../shared";
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: "PersonDetail",
   props: {
-    person: {
-      type: Object,
-      default: () => {}
-    }
+    id: {
+      type: Number,
+      default: 0,
+    },
   },
   data() {
     return {
-      clonedPerson: { ...this.person },
+      person: {},
+      // clonedPerson: { ...this.person }, 
+      // cloned to avoid obj mutation while using hardcoded data.
       message: "",
       message4comics: "",
       picLoaded: undefined,
@@ -112,12 +114,16 @@ export default {
       }
     };
   },
-  mixins: [lifecycleHooks],
+  async created(){
+    this.person = { ...this.getPersonById(this.id)};
+  },
   computed: {
+    ...mapGetters(['getPersonById']),
     fullName() {
-      return this.clonedPerson
-        ? this.clonedPerson.name + this.clonedPerson.description
-        : "";
+      return this.person ? `${this.person.firstName} ${this.person.lastName}` : '';
+      //return this.clonedPerson
+      // ? this.clonedPerson.name + this.clonedPerson.description
+      // : "";
     }
   },
   async created() {
@@ -125,6 +131,7 @@ export default {
     await this.loadComics();
   },
   methods: {
+    ...mapActions(['updatePersonAction', 'addPersonAction']),
     async loadPics() {
       this.message = "Loading photo...";
       let pics = await data.getPics();
@@ -150,10 +157,13 @@ export default {
       }
     },
     cancelPerson() {
-      this.$emit("cancel");
+      this.$router.push({ name: 'people' });
     },
-    savePerson() {
-      this.$emit("save", this.clonedPerson);
+    async savePerson() {
+     this.person.id
+        ? await this.updatePersonAction(this.person)
+        : await this.addPersonAction(this.person);
+      this.$router.push({ name: 'people' });
     }
   }
 };
