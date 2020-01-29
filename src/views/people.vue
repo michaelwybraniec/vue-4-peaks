@@ -66,16 +66,20 @@ export default {
       //await this.getPeopleAction();
      //TODO: Move this method to user.service.js,
      //TODO: so it is in the storage called once not each time when we load component
-      let apiKey = "apikey=c57d263f5e59e2805cebe38c6f1f63c0";
-      let url = "https://gateway.marvel.com:443/v1/public/characters?" + apiKey;
+      const apiKey = "apikey=c57d263f5e59e2805cebe38c6f1f63c0";
+      const url = "https://gateway.marvel.com:443/v1/public/characters?" + apiKey;
       const requestOptions = {
         method: 'GET',
         format: 'json',
         api_key: apiKey,
        };
-       let response = await axios(url,requestOptions )
-       console.log("response", response.data.data.results)
-       this.people = response.data.data.results;
+       const response = await axios(url,requestOptions )
+      let collection = response.data.data.results;
+       collection = collection.slice(8, collection.length);
+       console.log("response", collection)
+       this.people = collection;
+
+
        this.message = "";
     },
     cancelPerson() {
