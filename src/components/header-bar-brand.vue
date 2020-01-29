@@ -1,12 +1,20 @@
 <template>
-  <div class="navbar-brand">
-    <a
-      class="navbar-item"
-      href="https://vuejs.org/"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
+  <div>
+     <b-navbar-nav right>
+ <b-nav-item :href="vue">
+    
       <i class="fab js-logo fa-vuejs fa-2x" aria-hidden="true" />
-    </a>
+ </b-nav-item>
+     </b-navbar-nav>
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      vue: 'https://vuejs.org/'
+    };
+  },
+};
+</script>

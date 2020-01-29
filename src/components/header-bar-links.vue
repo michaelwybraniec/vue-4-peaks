@@ -1,17 +1,13 @@
 <template>
-  <div class="navbar-menu">
-    <div class="navbar-end">
-      <div class="navbar-item">
-        <div class="buttons">
-          <a :href="github" target="_blank" rel="noopener noreferrer">
-            <i class="fab fa-github fa-2x" aria-hidden="true"></i>
-          </a>
-          <a :href="twitter" target="_blank" rel="noopener noreferrer">
-            <i class="fab fa-twitter fa-2x" aria-hidden="true"></i>
-          </a>
-        </div>
-      </div>
-    </div>
+  <div>
+   <b-navbar-nav right>
+ <b-nav-item :href="github" right>
+  <i class="fab fa-github fa-2x" aria-hidden="true"></i>     
+ </b-nav-item>
+  <b-nav-item :href="twitter" right>
+  <i class="fab fa-twitter fa-2x" style="padding-top: 2px" aria-hidden="true"></i>
+</b-nav-item >
+  </b-navbar-nav>
   </div>
 </template>
 

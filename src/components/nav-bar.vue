@@ -1,9 +1,11 @@
 <template>
-  <nav class="column is-2 menu">
-    <p class="menu-label">Menu</p>
-    <ul class="menu-list">
-      <router-link to="/people">People</router-link>
+ <div class="mt-3">
+    <p class="text-center">Menu</p>
+    <div class="text-center">
+       <router-link to="/people" active-class="active">People</router-link>
+       <span> / </span>
       <router-link to="/about">About</router-link>
-    </ul>
-  </nav>
+    </div>
+    <br>
+  </div>
 </template>
