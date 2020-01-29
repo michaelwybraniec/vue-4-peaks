@@ -12,7 +12,7 @@
       <b-col md="6">
         <b-card-body title="Hello!" style="padding-top: 45px;">
           <b-card-text>
-            This is a demo VueJS app proptotyped at codesandbox.io
+            This is a demo VueJS app proptotyped with codesandbox.io
           </b-card-text>
         </b-card-body>
       </b-col>

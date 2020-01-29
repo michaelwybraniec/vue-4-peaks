@@ -1,5 +1,5 @@
 {
-  "name": "vue-4-peaks",
+  "name": "vue-4-peaks-with-vuex",
   "version": "0.1.4",
   "private": true,
   "scripts": {
