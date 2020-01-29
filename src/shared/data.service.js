@@ -1,20 +1,24 @@
-import * as axios from "axios";
-
-import { format } from "date-fns";
-import { inputDateFormat } from "./constants";
+import axios from "axios";
 
 import { API } from "./config";
 
 const getHeroes = async function() {
   try {
-    const response = await axios.get(`${API}/heroes`);
+    let apiKey = "apikey=c57d263f5e59e2805cebe38c6f1f63c0";
+    let url = "https://gateway.marvel.com:443/v1/public/characters?" + apiKey;
+    const requestOptions = {
+      method: "GET",
+      format: "json",
+      api_key: apiKey
+    };
+    const response = await axios(url, requestOptions);
+    console.log("response", response.data.data.results);
 
-    let data = parseList(response);
+    //let heroes = parseList(response.data.data.results);
+    let heroes = response;
 
-    const heroes = data.map(h => {
-      h.originDate = format(h.originDate, inputDateFormat);
-      return h;
-    });
+    localStorage.setItem("people", JSON.stringify(heroes));
+
     return heroes;
   } catch (error) {
     console.error(error);

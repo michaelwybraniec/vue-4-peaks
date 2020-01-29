@@ -99,7 +99,7 @@ export default {
   data() {
     return {
       person: {},
-      // clonedPerson: { ...this.person }, 
+      clonedPerson: { ...this.person }, 
       // cloned to avoid obj mutation while using hardcoded data.
       message: "",
       message4comics: "",
@@ -114,19 +114,17 @@ export default {
       }
     };
   },
-  async created(){
-    this.person = { ...this.getPersonById(this.id)};
-  },
   computed: {
     ...mapGetters(['getPersonById']),
     fullName() {
-      return this.person ? `${this.person.firstName} ${this.person.lastName}` : '';
-      //return this.clonedPerson
-      // ? this.clonedPerson.name + this.clonedPerson.description
-      // : "";
+      //return this.person ? `${this.person.firstName} ${this.person.lastName}` : '';
+      return this.clonedPerson
+       ? this.clonedPerson.name + this.clonedPerson.description
+       : "";
     }
   },
   async created() {
+    this.person = { ...this.getPersonById(this.id)};
     await this.loadPics();
     await this.loadComics();
   },
@@ -134,13 +132,14 @@ export default {
     ...mapActions(['updatePersonAction', 'addPersonAction']),
     async loadPics() {
       this.message = "Loading photo...";
-      let pics = await data.getPics();
-      for (let pic of pics) {
-        console.log(pic);
-        if (pic.id === this.clonedPerson.id) {
-          this.pic = pic.url;
-        }
-      }
+      this.pic = this.clonedPerson.thumbnail.url
+      //let pics = await data.getPics();
+      //for (let pic of pics) {
+      //  console.log(pic);
+      //  if (pic.id === this.clonedPerson.id) {
+      //    this.pic = pic.url;
+      //  }
+      //}
       if (this.pic) {
         this.picLoaded = true;
         this.message = "";
@@ -157,13 +156,15 @@ export default {
       }
     },
     cancelPerson() {
-      this.$router.push({ name: 'people' });
+       this.$emit("cancel");
+      // this.$router.push({ name: 'people' });
     },
     async savePerson() {
-     this.person.id
-        ? await this.updatePersonAction(this.person)
-        : await this.addPersonAction(this.person);
-      this.$router.push({ name: 'people' });
+      this.$emit("save", this.clonedPerson);
+      //  this.person.id
+      //  ? await this.updatePersonAction(this.person)
+      //  : await this.addPersonAction(this.person);
+      //  this.$router.push({ name: 'people' });
     }
   }
 };
