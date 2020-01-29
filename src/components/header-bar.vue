@@ -1,13 +1,11 @@
 <template>
   <header>
-    <nav
-      class="navbar has-background-dark is-dark"
-      role="navigation"
-      aria-label="main navigation"
-    >
+<b-navbar type="dark" variant="dark">
+  
       <HeaderBarBrand></HeaderBarBrand>
-      <HeaderBarLinks></HeaderBarLinks>
-    </nav>
+         <HeaderBarLinks></HeaderBarLinks>
+
+  </b-navbar>
   </header>
 </template>
 
