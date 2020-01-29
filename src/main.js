@@ -10,6 +10,7 @@ Vue.use(IconsPlugin);
 
 Vue.config.productionTip = false;
 
+console.log("store", store);
 new Vue({
   store,
   router,
