@@ -2,6 +2,12 @@
 Front-end app using Vue.js.
 Created with CodeSandbox
 
+## Demo
+```
+https://codesandbox.io/s/vue-4-peaks-with-vuex-h6j67
+https://h6j67.csb.app/people
+```
+
 ## Install dependencies
 
 ```
