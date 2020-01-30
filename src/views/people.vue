@@ -4,7 +4,7 @@
       <b-card-group deck>
         <b-card header="Vue App 4 Peaks">
           <b-row>
-            <b-col v-if="people">
+            <b-col>
               <div v-if="!selectedPerson">
                 <b-list-group v-for="person in people" :key="person.id">
                   <b-list-group-item button @click="selectPerson(person)">
@@ -49,7 +49,8 @@ export default {
     return {
       people: [],
       selectedPerson: undefined,
-      message: ""
+      message: "",
+      slice: 0,
     };
   },
   components: {
@@ -62,8 +63,7 @@ export default {
     ...mapActions(['getPeopleAction', 'deletePersonAction']),
     async loadPeople() {
       this.message = "Getting the people...";
-      //this.people = await data.getPeople(); // hadcoded data.
-      //await this.getPeopleAction();
+    //await this.getPeopleAction();
      //TODO: Move this method to user.service.js,
      //TODO: so it is in the storage called once not each time when we load component
       const apiKey = "apikey=c57d263f5e59e2805cebe38c6f1f63c0";
@@ -73,14 +73,14 @@ export default {
         format: 'json',
         api_key: apiKey,
        };
-       const response = await axios(url,requestOptions )
+      await axios(url,requestOptions).then(response => {
       let collection = response.data.data.results;
-       collection = collection.slice(8, collection.length);
-       console.log("response", collection)
-       this.people = collection;
-
-
+       this.people = collection.slice(8, collection.length);;
        this.message = "";
+       })
+       .catch(error => {
+      console.log("people.vue, loadPeople(), catch err:", error)
+      })  
     },
     cancelPerson() {
       this.selectedPerson = undefined;
@@ -96,7 +96,7 @@ export default {
     }
   },
   computed:{
-    ...mapState(['people']),
+   // ...mapState(['people']),
   }
 };
 </script>

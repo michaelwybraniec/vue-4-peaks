@@ -16,8 +16,7 @@
                       <b-img :src="pic" v-bind="mainProps" rounded="circle" fluid alt="img"></b-img>
                     </div>
                     <p>
-                      <b>{{clonedPerson.name}}</b>
-                      : {{clonedPerson.description}}
+                      <b>{{clonedPerson.name}}</b>: {{clonedPerson.description}}
                     </p>
                     <p>
                       ( ID:
@@ -48,7 +47,7 @@
                   <b-col sm="2">
                     <label for="description">Comics found:</label>
                   </b-col>
-                  <b-col sm="10">{{comicses.length}}</b-col>
+                  <b-col sm="10">{{clonedPerson.comics.items.length}}</b-col>
                 </b-row>
 
                 <b-row class="my-1 pt-2">
@@ -60,14 +59,15 @@
                 <div :key="comics.name" v-for="(comics, index) in comicses">
                   <b-row class="my-1" v-if="index < 3">
                     <b-col sm="2">
-                      <label>{{index}}:</label>
+                      <label>{{index + 1}}:</label>
                     </b-col>
-                    <b-col sm="10" style="padding-left: 15px">{{comics.title}} ({{comics.hero}})</b-col>
+                    <b-col sm="10" style="padding-left: 15px">{{comics.name}} ({{comics.name}})</b-col>
                   </b-row>
                 </div>
 
                 <b-row class="m-2 text-center" v-show="message4comics">
                   <b-col>
+                    <b-spinner type="grow"></b-spinner>
                     <p>{{ message4comics }}</p>
                   </b-col>
                 </b-row>
@@ -87,6 +87,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import { data } from "../shared";
 
 export default {
   name: "PersonDetail",
@@ -95,12 +96,15 @@ export default {
       type: Number,
       default: 0,
     },
+     person: {
+      type: Object,
+      default: () => {}
+    }
   },
   data() {
     return {
-      person: {},
-      clonedPerson: { ...this.person }, 
-      // cloned to avoid obj mutation while using hardcoded data.
+      //person: {},
+      clonedPerson: { ...this.person },  // to avoid obj mutation.
       message: "",
       message4comics: "",
       picLoaded: undefined,
@@ -124,7 +128,6 @@ export default {
     }
   },
   async created() {
-    this.person = { ...this.getPersonById(this.id)};
     await this.loadPics();
     await this.loadComics();
   },
@@ -132,14 +135,11 @@ export default {
     ...mapActions(['updatePersonAction', 'addPersonAction']),
     async loadPics() {
       this.message = "Loading photo...";
-      this.pic = this.clonedPerson.thumbnail.url
-      //let pics = await data.getPics();
-      //for (let pic of pics) {
-      //  console.log(pic);
-      //  if (pic.id === this.clonedPerson.id) {
-      //    this.pic = pic.url;
-      //  }
-      //}
+      this.pic = this.clonedPerson.thumbnail.path +"."+ this.clonedPerson.thumbnail.extention
+      console.log("methods(), loadPics(), clonedPerson",this.clonedPerson)
+      let pics = await data.getPics();
+      // path: "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available"
+      this.pic = pics[Math.floor(Math.random()*pics.length)].url;
       if (this.pic) {
         this.picLoaded = true;
         this.message = "";
@@ -147,20 +147,21 @@ export default {
     },
     async loadComics() {
       this.message4comics = "And now getting comics info...";
-      let comicses = await data.getComics();
-      for (let comics of comicses) {
-        if (comics.hero === this.clonedPerson.name) {
-          this.comicses.push(comics);
-        }
+      setTimeout(() => {
+        this.comicses = this.clonedPerson.comics.items
         this.message4comics = "";
-      }
+        }, 1000)
+      
+      
     },
     cancelPerson() {
        this.$emit("cancel");
+      // vuex prototyping.
       // this.$router.push({ name: 'people' });
     },
     async savePerson() {
       this.$emit("save", this.clonedPerson);
+      //  vuex prototyping
       //  this.person.id
       //  ? await this.updatePersonAction(this.person)
       //  : await this.addPersonAction(this.person);
