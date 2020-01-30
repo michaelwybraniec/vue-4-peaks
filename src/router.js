@@ -4,11 +4,8 @@ import PageNotFound from "@/views/page-not-found";
 
 Vue.use(Router);
 
-const parseProps = r => ({ id: parseInt(r.params.id) });
-
 export default new Router({
   mode: "history",
-  base: process.env.BASE_URL,
   routes: [
     {
       path: "/",
@@ -17,22 +14,17 @@ export default new Router({
     {
       path: "/people",
       name: "people",
-      component: () =>
-        import(/* webpackChunkName: "bundle.people" */ "./views/people.vue")
+      component: () => import("./views/people.vue")
     },
     {
       path: "/people/:id",
       name: "person-detail",
-      // props: true,
-      props: parseProps,
-      component: () =>
-        import(/* webpackChunkName: "bundle.people" */ "./views/person-detail.vue")
+      component: () => import("./views/person-detail.vue")
     },
     {
       path: "/about",
       name: "about",
-      component: () =>
-        import(/* webpackChunkName: "bundle.about" */ "./views/about.vue")
+      component: () => import("./views/about.vue")
     },
     {
       path: "*",
