@@ -1,17 +1,33 @@
 <template>
   <div>
     <b-container>
-      <b-card-group deck>
-        <b-card header="Vue App 4 Peaks">
-          <b-row>
-            <b-col>
-              <div v-if="!selectedPerson">
-                <b-list-group v-for="person in people" :key="person.id">
-                  <b-list-group-item button @click="selectPerson(person)">
-                    <div :key="person.name" class="name">
-                      <b>{{ person.name }}</b>
+
+      <div class="mt-4 mb-4 text-center" v-show="message" style='padding-top: 200px'>
+                <b-spinner type="grow"></b-spinner>
+         <p>{{ message }}</p>
+      </div>
+
+      <b-card-group deck v-if="people.length > 0" >
+        <b-card header="Vue App 4 Peaks" class="shadow">
+           <b-row>
+             <b-col>
+               <div v-if="!selectedPerson">
+
+               <!--  <div class="my-1 text-center">
+                  <span class="mt-2 mr-2">
+                    <label for="filter">View number of heroes :</label>
+                      </span>
+                     <span>
+                   <input id="filter" :v-model="sliceNbr" style="width: 100px">
+                 </span>
+                </div> -->
+
+               <b-list-group v-for="person in people" :key="person.id">
+                   <b-list-group-item button class="shadow-sm mt-1" @click="selectPerson(person)">
+                     <div :key="person.name" class="name">
+                       <b>{{ person.name }}</b>
                     </div>
-                    <div class="description">{{ person.description }}</div>
+                   <div class="description">{{ person.description }}</div>
                   </b-list-group-item>
                 </b-list-group>
               </div>
@@ -21,10 +37,7 @@
                 @cancel="cancelPerson"
                 v-if="selectedPerson"
               />
-              <div class="mt-4 mb-4 text-center" v-show="message">
-                <b-spinner type="grow"></b-spinner>
-                <p>{{ message }}</p>
-              </div>
+              
             </b-col>
           </b-row>
         </b-card>
@@ -50,7 +63,7 @@ export default {
       people: [],
       selectedPerson: undefined,
       message: "",
-      slice: 0,
+      sliceNbr: 0,
     };
   },
   components: {
@@ -62,7 +75,7 @@ export default {
   methods: {
     ...mapActions(['getPeopleAction', 'deletePersonAction']),
     async loadPeople() {
-      this.message = "Getting the people...";
+      this.message = "Getting the heroes...";
     //await this.getPeopleAction();
      //TODO: Move this method to user.service.js,
      //TODO: so it is in the storage called once not each time when we load component
@@ -96,7 +109,7 @@ export default {
     }
   },
   computed:{
-   // ...mapState(['people']),
+   //...mapState(['people']),
   }
 };
 </script>

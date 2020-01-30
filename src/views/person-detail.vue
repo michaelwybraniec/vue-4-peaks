@@ -27,7 +27,7 @@
 
                 <b-row class="my-1">
                   <b-col sm="2">
-                    <label for="name">Name:</label>
+                    <label for="name">Name: </label>
                   </b-col>
                   <b-col sm="10">
                     <b-form-input id="name" v-model="clonedPerson.name"></b-form-input>
@@ -36,7 +36,7 @@
 
                 <b-row class="my-1">
                   <b-col sm="2">
-                    <label for="description">Description:</label>
+                    <label for="description">Description: </label>
                   </b-col>
                   <b-col sm="10">
                     <b-form-input id="description" v-model="clonedPerson.description"></b-form-input>
@@ -49,21 +49,30 @@
                   </b-col>
                   <b-col sm="10">{{clonedPerson.comics.items.length}}</b-col>
                 </b-row>
+                
+                <div v-if="comicses.length > 0">
+                  <b-row class="my-1 pt-2">
+                    <b-col sm="2">
+                      <label for="description">First 3:</label>
+                    </b-col>
+                  </b-row>
 
-                <b-row class="my-1 pt-2">
-                  <b-col sm="2">
-                    <label for="description">First 3:</label>
+                  <div :key="comics.name" v-for="(comics, index) in comicses">
+                    <b-row class="my-1" v-if="index < 3">
+                      <b-col sm="2">
+                        <label>{{index + 1}}:</label>
+                      </b-col>
+                      <b-col sm="10" style="padding-left: 15px">{{comics.name}} ({{comics.name}})</b-col>
+                    </b-row>
+                  </div>
+                
+              </div>
+
+                <b-row class="m-2 text-center" v-show="messageNoComics">
+                  <b-col>
+                    <code>{{ messageNoComics }}</code>
                   </b-col>
                 </b-row>
-
-                <div :key="comics.name" v-for="(comics, index) in comicses">
-                  <b-row class="my-1" v-if="index < 3">
-                    <b-col sm="2">
-                      <label>{{index + 1}}:</label>
-                    </b-col>
-                    <b-col sm="10" style="padding-left: 15px">{{comics.name}} ({{comics.name}})</b-col>
-                  </b-row>
-                </div>
 
                 <b-row class="m-2 text-center" v-show="message4comics">
                   <b-col>
@@ -73,9 +82,10 @@
                 </b-row>
 
                 <div class="float-right mt-4">
-                  <b-button variant="light" @click="cancelPerson()">Cancel</b-button>
+                  <b-button class="mr-2" variant="light" @click="cancelPerson()">Cancel</b-button>
                   <b-button variant="light" @click="savePerson()">Save</b-button>
                 </div>
+
               </b-col>
             </b-row>
           </b-card>
@@ -107,6 +117,7 @@ export default {
       clonedPerson: { ...this.person },  // to avoid obj mutation.
       message: "",
       message4comics: "",
+      messageNoComics: "",
       picLoaded: undefined,
       pic: "",
       comicses: [],
@@ -149,6 +160,9 @@ export default {
       this.message4comics = "And now getting comics info...";
       setTimeout(() => {
         this.comicses = this.clonedPerson.comics.items
+        console.log(this.clonedPerson.comics.items, this.clonedPerson.comics.items.length)
+        if (this.clonedPerson.comics.items.length === 0) this.messageNoComics = "No commics available :-(";
+        else this.messageNoComics = "";
         this.message4comics = "";
         }, 1000)
       
