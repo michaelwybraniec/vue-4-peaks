@@ -3,7 +3,7 @@
     <b-container>
       <b-row>
         <b-col>
-          <b-card>
+          <b-card class="mt-4 mb-4 shadow-sm">
             <b-row>
               <b-col>
                 <b-row class="my-1 mb-2 text-center">
