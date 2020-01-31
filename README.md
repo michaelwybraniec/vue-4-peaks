@@ -2,6 +2,14 @@
 Front-end app using Vue.js.
 Created with CodeSandbox
 
+App functionality:
+- Routing: Menu: People: onClick it calls for a 'people.vue' component
+- then at the lifecycle 'created()', component calls method to get data from API developer.marvel.com
+- once loaded, it prints a clickable list of first 10 objets
+- on click, it passes selected object to a child 'person-detail.vue'
+- onCancel a child does not mutate the object, while onSave object is updated to a parent
+- Parent can see updated object in the list.
+
 ## Demo
 ```
 https://codesandbox.io/s/vue-4-peaks-with-vuex-h6j67
