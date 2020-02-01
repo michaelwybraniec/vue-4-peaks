@@ -4,7 +4,8 @@
         <b-spinner type="grow"></b-spinner>
         <p>{{ message }}</p>
       </div>
-      <b-card-group deck v-if="people.length > 0">
+      	<fade-transition>
+        <b-card-group deck v-if="people.length > 0">
         <b-card header="Vue App 4 Peaks" class="shadow">
            <b-row>
              <b-col>
@@ -28,6 +29,7 @@
           </b-row>
         </b-card>
       </b-card-group>
+      	</fade-transition>
     </b-container>
 </template>
 
@@ -81,7 +83,7 @@ export default {
       })  
     },
     cancelPerson() {
-      this.selectedPerson = undefined;
+      this.selectedPerson = !this.selectedPerson;
     },
     savePerson(person) {
       const index = this.people.findIndex(p => p.id === person.id);
