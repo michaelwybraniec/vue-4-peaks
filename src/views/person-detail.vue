@@ -39,7 +39,7 @@
             </b-col>
           </b-row>
 
-          <b-row class="my-1">
+          <b-row>
             <b-col sm="2">
               <label for="description">Description:</label>
             </b-col>
@@ -61,14 +61,12 @@
             </div>
           </div>
 
-          <b-row class="m-2 pt-4 text-center" v-show="messageNoComics">
-            <b-col>
+          <b-row class="text-center">
+            <b-col v-show="messageNoComics" class="m-4" style="padding-top: 57px;">
               <code>{{ messageNoComics }}</code>
             </b-col>
-          </b-row>
 
-          <b-row class="m-2 pt-4 text-center" v-show="message4comics">
-            <b-col>
+            <b-col v-show="message4comics" class="m-4" style="padding-top: 20px;">
               <b-spinner type="grow"></b-spinner>
               <p>{{ message4comics }}</p>
             </b-col>
