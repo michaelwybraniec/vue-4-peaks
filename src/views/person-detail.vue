@@ -39,7 +39,7 @@
             </b-col>
           </b-row>
 
-          <b-row class="my-1">
+          <b-row>
             <b-col sm="2">
               <label for="description">Description:</label>
             </b-col>
@@ -49,11 +49,8 @@
           </b-row>
 
           <div v-if="comicses.length > 0">
-         
             <div class="text-center pt-4">Comics found: {{clonedPerson.comics.items.length}}</div>
             <div class="text-center pt-2 pb-2">First 3:</div>
-        
-
             <div :key="comics.name" v-for="(comics, index) in comicses">
               <b-row class="my-1" v-if="index < 3">
                 <b-col sm="2">
@@ -64,14 +61,12 @@
             </div>
           </div>
 
-          <b-row class="m-2 pt-4 text-center" v-show="messageNoComics">
-            <b-col>
+          <b-row class="text-center">
+            <b-col v-show="messageNoComics" class="m-4" style="padding-top: 57px;">
               <code>{{ messageNoComics }}</code>
             </b-col>
-          </b-row>
 
-          <b-row class="m-2 pt-4 text-center" v-show="message4comics">
-            <b-col>
+            <b-col v-show="message4comics" class="m-4" style="padding-top: 20px;">
               <b-spinner type="grow"></b-spinner>
               <p>{{ message4comics }}</p>
             </b-col>
@@ -141,7 +136,7 @@ export default {
         this.clonedPerson.thumbnail.path +
         "." +
         this.clonedPerson.thumbnail.extention;
-      console.log("methods(), loadPics(), clonedPerson", this.clonedPerson);
+      console.log("methods(), loadPics(), this.clonedPerson.name", this.clonedPerson.name);
       let pics = await data.getPics();
       // path: "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available"
       this.pic = pics[Math.floor(Math.random() * pics.length)].url;
@@ -155,7 +150,7 @@ export default {
       setTimeout(() => {
         this.comicses = this.clonedPerson.comics.items;
         console.log(
-          this.clonedPerson.comics.items,
+          "All comics available:",
           this.clonedPerson.comics.items.length
         );
         if (this.clonedPerson.comics.items.length === 0) {
