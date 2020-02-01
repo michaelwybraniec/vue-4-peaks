@@ -1,27 +1,14 @@
 <template>
-  <div>
-    <b-container class>
-
+    <b-container>
       <div class="mt-4 mb-4 text-center" v-show="message" style='padding-top: 200px'>
-                <b-spinner type="grow"></b-spinner>
-         <p>{{ message }}</p>
+        <b-spinner type="grow"></b-spinner>
+        <p>{{ message }}</p>
       </div>
-
       <b-card-group deck v-if="people.length > 0">
         <b-card header="Vue App 4 Peaks" class="shadow">
            <b-row>
              <b-col>
                <div v-if="!selectedPerson">
-
-               <!--  <div class="my-1 text-center">
-                  <span class="mt-2 mr-2">
-                    <label for="filter">View number of heroes :</label>
-                      </span>
-                     <span>
-                   <input id="filter" :v-model="sliceNbr" style="width: 100px">
-                 </span>
-                </div> -->
-
                <b-list-group v-for="person in people" :key="person.id" >
                    <b-list-group-item button class="shadow-sm mt-1" @click="selectPerson(person)">
                      <div :key="person.name" class="name">
@@ -37,15 +24,11 @@
                 @cancel="cancelPerson"
                 v-if="selectedPerson"
               />
-
-   
-              
             </b-col>
           </b-row>
         </b-card>
       </b-card-group>
     </b-container>
-  </div>
 </template>
 
 <script>

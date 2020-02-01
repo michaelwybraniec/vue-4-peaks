@@ -161,8 +161,11 @@ export default {
       setTimeout(() => {
         this.comicses = this.clonedPerson.comics.items
         console.log(this.clonedPerson.comics.items, this.clonedPerson.comics.items.length)
-        if (this.clonedPerson.comics.items.length === 0) this.messageNoComics = "No commics available :-(";
-        else this.messageNoComics = "";
+        if (this.clonedPerson.comics.items.length === 0) {
+          this.messageNoComics = "No commics available :-(";
+        } else {
+          this.messageNoComics = "";
+          }
         this.message4comics = "";
         }, 1000)
       
