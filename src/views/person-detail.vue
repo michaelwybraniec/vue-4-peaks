@@ -49,11 +49,8 @@
           </b-row>
 
           <div v-if="comicses.length > 0">
-         
             <div class="text-center pt-4">Comics found: {{clonedPerson.comics.items.length}}</div>
             <div class="text-center pt-2 pb-2">First 3:</div>
-        
-
             <div :key="comics.name" v-for="(comics, index) in comicses">
               <b-row class="my-1" v-if="index < 3">
                 <b-col sm="2">
