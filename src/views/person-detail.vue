@@ -1,8 +1,5 @@
 <template>
-  <div>
     <b-container>
-      <b-row>
-        <b-col>
           <b-card class="mt-4 mb-4 shadow-sm">
             <b-row>
               <b-col>
@@ -15,13 +12,8 @@
                     <div v-if="picLoaded">
                       <b-img :src="pic" v-bind="mainProps" rounded="circle" fluid alt="img"></b-img>
                     </div>
-                    <p>
-                      <b>{{clonedPerson.name}}</b>: {{clonedPerson.description}}
-                    </p>
-                    <p>
-                      ( ID:
-                      <code>{{ clonedPerson.id }}</code> )
-                    </p>
+                    <p><b>{{clonedPerson.name}}</b>: {{clonedPerson.description}}</p>
+                    <p>( ID:<code>{{ clonedPerson.id }}</code> )</p>
                   </b-col>
                 </b-row>
 
@@ -50,30 +42,31 @@
                   <b-col sm="10">{{clonedPerson.comics.items.length}}</b-col>
                 </b-row>
                 
-                <div v-if="comicses.length > 0">
+               
+                <div v-if="comicses">
                   <b-row class="my-1 pt-2">
                     <b-col sm="2">
                       <label for="description">First 3:</label>
                     </b-col>
                   </b-row>
-
+               
                   <div :key="comics.name" v-for="(comics, index) in comicses">
                     <b-row class="my-1" v-if="index < 3">
                       <b-col sm="2">
                         <label>{{index + 1}}:</label>
                       </b-col>
-                      <b-col sm="10" style="padding-left: 15px">{{comics.name}} ({{comics.name}})</b-col>
+                      <b-col  sm="10" style="padding-left: 15px">{{comics.name}} ({{comics.name}})</b-col>
                     </b-row>
                   </div>
-                
-              </div>
-
+                </div>
+         
+         
                 <b-row class="m-2 text-center" v-show="messageNoComics">
                   <b-col>
                     <code>{{ messageNoComics }}</code>
                   </b-col>
                 </b-row>
-
+                  
                 <b-row class="m-2 text-center" v-show="message4comics">
                   <b-col>
                     <b-spinner type="grow"></b-spinner>
@@ -89,10 +82,7 @@
               </b-col>
             </b-row>
           </b-card>
-        </b-col>
-      </b-row>
     </b-container>
-  </div>
 </template>
 
 <script>
@@ -168,8 +158,6 @@ export default {
           }
         this.message4comics = "";
         }, 1000)
-      
-      
     },
     cancelPerson() {
        this.$emit("cancel");
