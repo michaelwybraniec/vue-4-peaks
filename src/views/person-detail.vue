@@ -136,7 +136,7 @@ export default {
         this.clonedPerson.thumbnail.path +
         "." +
         this.clonedPerson.thumbnail.extention;
-      console.log("methods(), loadPics(), clonedPerson", this.clonedPerson);
+      console.log("methods(), loadPics(), this.clonedPerson.name", this.clonedPerson.name);
       let pics = await data.getPics();
       // path: "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available"
       this.pic = pics[Math.floor(Math.random() * pics.length)].url;
@@ -150,7 +150,7 @@ export default {
       setTimeout(() => {
         this.comicses = this.clonedPerson.comics.items;
         console.log(
-          this.clonedPerson.comics.items,
+          "All comics available:",
           this.clonedPerson.comics.items.length
         );
         if (this.clonedPerson.comics.items.length === 0) {
