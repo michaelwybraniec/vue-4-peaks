@@ -12,7 +12,7 @@ Vue.use(Transitions);
 
 Vue.config.productionTip = false;
 
-console.log("store", store);
+console.log("store app.js", store);
 new Vue({
   store,
   router,
