@@ -11,9 +11,9 @@
             <b-col>
               <div v-if="!selectedPerson">
                 <p class="mt-1 text-right">{{APIorJSONDB}}</p>
-                <p
-                  class="mt-1 text-right"
-                >Current Page: {{ currentPage }}, People: {{people.length}}</p>
+                <p class="mt-1 text-right">
+                  Current Page: {{ currentPage }}, People: {{people.length}}
+                </p>
                 <b-pagination v-model="currentPage" :total-rows="50" align="right"></b-pagination>
 
                 <b-list-group v-for="(index, person) in people" :person="person" :key="person.id">
@@ -42,7 +42,6 @@ import axios from "axios";
 import jsonDB from "../../../db.json";
 import { mapActions } from "vuex";
 import //lifecycleHooks,
-//data, //hardcoded data
 //dataService
 "../shared";
 import PersonDetail from "@/views/person-detail";
