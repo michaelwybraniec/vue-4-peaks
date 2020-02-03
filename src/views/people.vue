@@ -10,9 +10,10 @@
           <b-row>
             <b-col>
               <div v-if="!selectedPerson">
-                <p
-                  class="mt-1 text-right"
-                >Current Page: {{ currentPage }}, People: {{people.length}}</p>
+                <p class="mt-1 text-right">{{APIorJSONDB}}</p>
+                <p class="mt-1 text-right">
+                  Current Page: {{ currentPage }}, People: {{people.length}}
+                </p>
                 <b-pagination v-model="currentPage" :total-rows="50" align="right"></b-pagination>
 
                 <b-list-group v-for="(index, person) in people" :person="person" :key="person.id">
@@ -38,9 +39,9 @@
 
 <script>
 import axios from "axios";
-import { mapActions, mapState } from "vuex";
+import jsonDB from "../../../db.json";
+import { mapActions } from "vuex";
 import //lifecycleHooks,
-//data, //hardcoded data
 //dataService
 "../shared";
 import PersonDetail from "@/views/person-detail";
@@ -49,7 +50,10 @@ export default {
   name: "People",
   data() {
     return {
+      apiKey: "apikey=c57d263f5e59e2805cebe38c6f1f63c0",
+      APIorJSONDB: "",
       people: [],
+      peopleIfNoApi: jsonDB.data,
       chunkedPeople: [],
       selectedPerson: undefined,
       message: "",
@@ -79,8 +83,7 @@ export default {
       //TODO: Move this method to user.service.js,
       //TODO: so it is in the storage called once not each time when we load component
       const apiKey = "apikey=c57d263f5e59e2805cebe38c6f1f63c0";
-      const url =
-        "https://gateway.marvel.com:443/v1/public/characters?" + apiKey;
+      const url = "https://gateway.marvel.com/v1/public/characters?" + apiKey;
       const requestOptions = {
         method: "GET",
         format: "json",
@@ -93,7 +96,6 @@ export default {
           let index = 0;
           let arrayLength = this.people.length;
           let tempArray = [];
-
           for (index = 0; index < arrayLength; index += 7) {
             let myChunk = clonedPeople.slice(index, index + 7);
             // Do something if you want with the group
@@ -102,11 +104,26 @@ export default {
           console.log(tempArray);
           this.chunkedPeople = tempArray;
           this.people = this.people.slice(0, 7);
-
+          this.APIorJSONDB = "Connected to API.";
           this.message = "";
         })
         .catch(error => {
-          console.log("people.vue, loadPeople(), catch err:", error);
+          console.log("people.vue, loadPeople(), catch err msg:", error);
+          this.people = this.peopleIfNoApi;
+          const clonedPeople = this.people;
+          let index = 0;
+          let arrayLength = this.people.length;
+          let tempArray = [];
+          for (index = 0; index < arrayLength; index += 7) {
+            let myChunk = clonedPeople.slice(index, index + 7);
+            // Do something if you want with the group
+            tempArray.push(myChunk);
+          }
+          console.log(tempArray);
+          this.chunkedPeople = tempArray;
+          this.people = this.people.slice(0, 7);
+          this.APIorJSONDB = "API not available: JSON DB loaded.";
+          this.message = "";
         });
     },
     cancelPerson() {
