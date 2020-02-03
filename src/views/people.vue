@@ -11,9 +11,9 @@
             <b-col>
               <div v-if="!selectedPerson">
                 <p class="mt-1 text-right">{{APIorJSONDB}}</p>
-                <p class="mt-1 text-right">
-                  Current Page: {{ currentPage }}, People: {{people.length}}
-                </p>
+                <p
+                  class="mt-1 text-right"
+                >Current Page: {{ currentPage }}, People: {{people.length}}</p>
                 <b-pagination v-model="currentPage" :total-rows="50" align="right"></b-pagination>
 
                 <b-list-group v-for="(index, person) in people" :person="person" :key="person.id">
@@ -41,16 +41,13 @@
 import axios from "axios";
 import jsonDB from "../../../db.json";
 import { mapActions } from "vuex";
-import //lifecycleHooks,
-//dataService
-"../shared";
 import PersonDetail from "@/views/person-detail";
-
 export default {
   name: "People",
   data() {
     return {
       apiKey: "apikey=c57d263f5e59e2805cebe38c6f1f63c0",
+      apiUrl: "https://gateway.marvel.com/v1/public/characters?",
       APIorJSONDB: "",
       people: [],
       peopleIfNoApi: jsonDB.data,
@@ -82,47 +79,38 @@ export default {
       //await this.getPeopleAction();
       //TODO: Move this method to user.service.js,
       //TODO: so it is in the storage called once not each time when we load component
-      const apiKey = "apikey=c57d263f5e59e2805cebe38c6f1f63c0";
-      const url = "https://gateway.marvel.com/v1/public/characters?" + apiKey;
+      const url = this.apiUrl + this.apiKey;
       const requestOptions = {
         method: "GET",
         format: "json",
-        api_key: apiKey
+        api_key: this.apiKey
       };
       await axios(url, requestOptions)
         .then(response => {
           this.people = response.data.data.results;
           const clonedPeople = this.people;
           let index = 0;
-          let arrayLength = this.people.length;
-          let tempArray = [];
-          for (index = 0; index < arrayLength; index += 7) {
+          for (index = 0; index < this.people.length; index += 7) {
             let myChunk = clonedPeople.slice(index, index + 7);
-            // Do something if you want with the group
-            tempArray.push(myChunk);
+            this.chunkedPeople.push(myChunk);
           }
-          console.log(tempArray);
-          this.chunkedPeople = tempArray;
+          console.log(this.chunkedPeople);
           this.people = this.people.slice(0, 7);
           this.APIorJSONDB = "Connected to API.";
           this.message = "";
         })
-        .catch(error => {
-          console.log("people.vue, loadPeople(), catch err msg:", error);
+        .catch(err => {
+          console.log("Catch err msg:", err);
           this.people = this.peopleIfNoApi;
           const clonedPeople = this.people;
           let index = 0;
-          let arrayLength = this.people.length;
-          let tempArray = [];
-          for (index = 0; index < arrayLength; index += 7) {
+          for (index = 0; index < this.people.length; index += 7) {
             let myChunk = clonedPeople.slice(index, index + 7);
-            // Do something if you want with the group
-            tempArray.push(myChunk);
+            this.chunkedPeople.push(myChunk);
           }
-          console.log(tempArray);
-          this.chunkedPeople = tempArray;
+          console.log(this.chunkedPeople);
           this.people = this.people.slice(0, 7);
-          this.APIorJSONDB = "API not available: JSON DB loaded.";
+          this.APIorJSONDB = "API not available: db.json has been loaded.";
           this.message = "";
         });
     },
