@@ -41,12 +41,7 @@
 import axios from "axios";
 import jsonDB from "../../../db.json";
 import { mapActions } from "vuex";
-import //lifecycleHooks,
-//data, //hardcoded data
-//dataService
-"../shared";
 import PersonDetail from "@/views/person-detail";
-
 export default {
   name: "People",
   data() {
