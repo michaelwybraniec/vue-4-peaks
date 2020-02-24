@@ -18,7 +18,7 @@
     "@vue/test-utils": "1.0.0-beta.31",
     "axios": "0.19.2",
     "bootstrap": "4.4.1",
-    "bootstrap-vue": "2.3.0",
+    "bootstrap-vue": "2.4.0",
     "core-js": "3.6.4",
     "date-fns": "2.9.0",
     "flush-promises": "1.0.2",
