@@ -9,7 +9,9 @@
     "build": "concurrently \"vue-cli-service build\" \"node build/dev-server.js\"",
     "lint": "concurrently \"vue-cli-service lint\" \"eslint --ext .js,.vue src\"",
     "backend": "json-server --watch db.json --routes routes.json --port 8888 --delay 250 --middlewares ./node_modules/json-server-reset",
-    "dev": "concurrently \"npm run backend\" \"npm run serve\" \"node build/dev-server.js\""
+    "dev": "concurrently \"npm run backend\" \"npm run serve\" \"node build/dev-server.js\"",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "dependencies": {
     "@vue/cli-plugin-babel": "4.1.1",
@@ -30,7 +32,8 @@
     "vue-router": "3.1.5",
     "vue-template-compiler": "2.6.11",
     "vue2-transitions": "0.3.0",
-    "vuex": "3.1.2"
+    "vuex": "3.1.2",
+    "snyk": "^1.316.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-eslint": "4.1.1",
@@ -100,5 +103,6 @@
         "<rootDir>/node_modules/jest-serializer-vue"
       ]
     }
-  }
+  },
+  "snyk": true
 }
